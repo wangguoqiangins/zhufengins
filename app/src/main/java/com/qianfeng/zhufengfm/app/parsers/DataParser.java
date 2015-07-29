@@ -1,6 +1,7 @@
 package com.qianfeng.zhufengfm.app.parsers;
 
 import com.qianfeng.zhufengfm.app.model.CategoryTagMenu;
+import com.qianfeng.zhufengfm.app.model.DiscoverCategory;
 import com.qianfeng.zhufengfm.app.model.DiscoverTab;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,6 +20,52 @@ public final class DataParser {
 
     private DataParser(){
 
+    }
+
+    /**
+     * 解析发现的分类
+     * @param json
+     * @return
+     */
+    public static List<DiscoverCategory> parseDiscoverCategories(JSONObject json){
+        List<DiscoverCategory> ret = null;
+        if (json != null) {
+
+            try {
+                int code = json.getInt("ret");
+
+                if(code == 0){
+
+                    JSONArray jsonArray = json.getJSONArray("list");
+
+                    int len = jsonArray.length();
+
+                    if(len > 0){
+
+                        ret = new LinkedList<DiscoverCategory>();
+
+                        for (int i = 0; i < len; i++) {
+
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                            DiscoverCategory category = new DiscoverCategory();
+
+                            category.parseJSON(jsonObject);
+
+                            ret.add(category);
+
+                        }
+
+                    }
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return ret;
     }
 
     /**
@@ -118,6 +165,5 @@ public final class DataParser {
         }
 
         return ret;
-
     }
 }
