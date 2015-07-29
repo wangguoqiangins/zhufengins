@@ -19,6 +19,11 @@ public class Constants {
      */
     public static final int TASK_CATEGORY_TAG_MENU = 1;
 
+    /**
+     * DiscoverTabTask 使用的常量
+     */
+    public static final int TASK_DISCOVER_TABS = 2;
+
     ////////////////////////////////////////////
 
     // SharedPreferences 常量
@@ -29,4 +34,5 @@ public class Constants {
      * 教程页上一次加载的版本号
      */
     public static final String SP_KEY_GUIDE_LAST_SHOW_VER = "glv";
+
 }

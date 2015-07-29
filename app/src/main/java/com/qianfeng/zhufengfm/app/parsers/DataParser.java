@@ -1,6 +1,7 @@
 package com.qianfeng.zhufengfm.app.parsers;
 
 import com.qianfeng.zhufengfm.app.model.CategoryTagMenu;
+import com.qianfeng.zhufengfm.app.model.DiscoverTab;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,4 +72,52 @@ public final class DataParser {
         return ret;
     }
 
+    /**
+     * 解析发现的Tab标题
+     * @param jsonObject
+     * @return
+     */
+    public static List<DiscoverTab> parseDiscoverTabs(JSONObject jsonObject) {
+        List<DiscoverTab> ret = null;
+
+        try {
+            int code = jsonObject.getInt("ret");
+            if(code == 0){
+
+                JSONObject tabs = jsonObject.getJSONObject("tabs");
+
+                JSONArray jsonArray = tabs.optJSONArray("list");
+
+                if (jsonArray != null) {
+
+                    int len = jsonArray.length();
+
+                    if(len > 0){
+
+                        ret = new LinkedList<DiscoverTab>();
+
+                        for (int i = 0; i < len; i++) {
+
+                            DiscoverTab tab = new DiscoverTab();
+
+                            tab.parseJSON(jsonArray.getJSONObject(i));
+
+                            ret.add(tab);
+
+                        }
+
+                        // TODO 更新ViewPager与TabLayout
+
+                    }
+
+                }
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return ret;
+
+    }
 }
