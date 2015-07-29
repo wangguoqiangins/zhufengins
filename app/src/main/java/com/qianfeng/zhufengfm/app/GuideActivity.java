@@ -1,39 +1,76 @@
 package com.qianfeng.zhufengfm.app;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.Window;
+import com.qianfeng.zhufengfm.app.adapters.GuideAdapter;
+import com.qianfeng.zhufengfm.app.util.PackageUtil;
 
+import java.util.ArrayList;
 
-public class GuideActivity extends ActionBarActivity {
+/**
+ * 教程页
+ */
+public class GuideActivity extends FragmentActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_guide);
-    }
 
+        ViewPager pager = (ViewPager) findViewById(R.id.guide_view_pager);
+        if (pager != null) {
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_guide, menu);
-        return true;
-    }
+            ArrayList<Integer> images = new ArrayList<Integer>();
+            for (int i = 0; i < 4; i++) {
+                // TODO 换成更好看的图片
+                images.add(R.mipmap.ic_launcher);
+            }
+            GuideAdapter adapter = new GuideAdapter(this, images);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+            // 设置Adapter的 内部按钮的点击事件
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            adapter.setGoOnClickListener(this);
+
+            pager.setAdapter(adapter);
+
         }
 
-        return super.onOptionsItemSelected(item);
+        /////////////////////////////////////
+        // 设置SharedPreferences ，只要教程出来，就设置
+
+        SharedPreferences sp =
+                getSharedPreferences(Constants.SP_NAME, MODE_PRIVATE);
+
+        String versionName = PackageUtil.getPackageVersionName(this);
+
+        SharedPreferences.Editor editor = sp.edit();
+
+        editor.putString(Constants.SP_KEY_GUIDE_LAST_SHOW_VER, versionName);
+
+        editor.commit();
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        startMain();
+    }
+
+    private void startMain() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startMain();
     }
 }

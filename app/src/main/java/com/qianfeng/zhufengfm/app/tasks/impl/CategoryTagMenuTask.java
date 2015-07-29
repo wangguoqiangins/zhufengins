@@ -1,6 +1,6 @@
 package com.qianfeng.zhufengfm.app.tasks.impl;
 
-import com.qianfeng.zhufengfm.app.TaskConstants;
+import com.qianfeng.zhufengfm.app.Constants;
 import com.qianfeng.zhufengfm.app.client.ClientDiscoverAPI;
 import com.qianfeng.zhufengfm.app.tasks.BaseTask;
 import com.qianfeng.zhufengfm.app.tasks.TaskCallback;
@@ -33,7 +33,7 @@ public class CategoryTagMenuTask extends BaseTask {
 
         TaskResult ret = new TaskResult();
 
-        ret.taskId = TaskConstants.TASK_CATEGORY_TAG_MENU;
+        ret.taskId = Constants.TASK_CATEGORY_TAG_MENU;
 
         /////////////////////
 
