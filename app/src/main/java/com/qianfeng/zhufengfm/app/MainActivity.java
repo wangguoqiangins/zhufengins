@@ -14,7 +14,7 @@ import com.qianfeng.zhufengfm.app.fragments.ProfileFragment;
 /**
  * 主界面
  */
-public class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener {
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
     private DiscoverFragment discoverFragment;
 
@@ -28,7 +28,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        /////////////////////////////////////////////////////////////////
+        setTitle("主界面");//不会显示
         RadioGroup tabBar =
                 (RadioGroup) findViewById(R.id.main_tab_bar);
 
@@ -80,4 +81,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         transaction.commit();
 
     }
+
+//    @Override
+//    protected int getEnterAnimationId() {
+//        return 0;
+//    }
 }

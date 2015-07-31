@@ -112,4 +112,17 @@ public final class ClientDiscoverAPI {
 
         return ret;
     }
+//http://mobile.ximalaya.com/mobile/discovery/v1/recommends?channel=and-f6&device=android&includeActivity=true&includeSpecial=true&scale=2&version=4.1.7.1
+//SERVER_MOBILE = "http://mobile.ximalaya.com";
+    public static String getDiscoverRecommend() {
+        String ret = null;
+        String url = SERVER_MOBILE+"/mobile/discovery/v1/recommends?channel=and-f6&device=android&includeActivity=true&includeSpecial=true&scale=2&version=4.1.7.1";
+        byte [] arr = HttpUtil.doGet(url);
+        try {
+            ret = new String(arr,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
 }

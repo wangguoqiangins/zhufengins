@@ -11,7 +11,9 @@ import com.qianfeng.zhufengfm.app.parsers.DataParser;
 import com.qianfeng.zhufengfm.app.tasks.TaskCallback;
 import com.qianfeng.zhufengfm.app.tasks.TaskResult;
 import com.qianfeng.zhufengfm.app.tasks.impl.CategoryTagMenuTask;
+import com.qianfeng.zhufengfm.app.util.MyLog;
 import com.qianfeng.zhufengfm.app.util.PackageUtil;
+import com.qianfeng.zhufengfm.app.util.UncaughtExceptionHandlerImpl;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -29,6 +31,10 @@ public class SplashActivity extends FragmentActivity implements TaskCallback {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_splash);
+        //为当前线程，设置未捕获异常的处理器
+        //这个处理器就是用来保存未捕获异常日志信息的
+        UncaughtExceptionHandlerImpl handler = new UncaughtExceptionHandlerImpl(getApplicationContext());
+        Thread.setDefaultUncaughtExceptionHandler(handler);
 
     }
 
@@ -39,6 +45,10 @@ public class SplashActivity extends FragmentActivity implements TaskCallback {
         // 启动扉页，进行网络检查与网络请求，下载数据
         // 最终显示主界面
 
+        int a =3;
+        int b =0;
+        int i = a/b;
+        MyLog.d("splash===","3/0="+i);
         CategoryTagMenuTask task =
                 new CategoryTagMenuTask(this);
         task.execute();

@@ -2,6 +2,7 @@ package com.qianfeng.zhufengfm.app.fragments.discover;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.qianfeng.zhufengfm.app.parsers.DataParser;
 import com.qianfeng.zhufengfm.app.tasks.TaskCallback;
 import com.qianfeng.zhufengfm.app.tasks.TaskResult;
 import com.qianfeng.zhufengfm.app.tasks.impl.DiscoverCategoryTask;
+import com.qianfeng.zhufengfm.app.util.MyLog;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -29,7 +31,7 @@ import java.util.List;
  * 分类
  */
 public class DiscoverCategoryFragment extends Fragment implements TaskCallback {
-
+    public static final String TAG = "ins";
     public DiscoverCategoryFragment() {
     }
 
@@ -43,8 +45,10 @@ public class DiscoverCategoryFragment extends Fragment implements TaskCallback {
 
         if (categories != null && !categories.isEmpty()) {
             // 有分类
+            MyLog.d(TAG, "discover category has");
         }else{
             // 无分类
+            MyLog.d(TAG,"discover category needs request");
             DiscoverCategoryTask task =
                     new DiscoverCategoryTask(this);
 

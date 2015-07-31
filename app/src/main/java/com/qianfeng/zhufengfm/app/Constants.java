@@ -41,4 +41,5 @@ public class Constants {
     public static final String SP_KEY_GUIDE_LAST_SHOW_VER = "glv";
 
 
+    public static final int TASK_DISCOVER_RECOMMEND = 4;
 }

@@ -22,6 +22,11 @@
    7) 收到TaskResult.data, 数据JSON解析，DataParser 实现JSON解析
    8) DataParser 返回数据对象，采用实体类解析自己的JSON
    9) 更新数据与UI
-
+4. 发现
+   5) 内容的展示：可以参考的两种方式：
+   a.使用listview 实现复杂的多布局复用的条目展示；
+   b.使用scrollview 通过代码进行动态的添加；
+   确认使用listview来实现
+   6)对于推荐的adapter直接传递一个对象，内部包含不同的数据，通过这个对象再来加载listview
 
 
