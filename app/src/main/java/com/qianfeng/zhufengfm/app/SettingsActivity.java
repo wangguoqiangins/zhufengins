@@ -41,7 +41,7 @@ public class SettingsActivity extends BaseActivity implements TaskCallback {
                 DiscoverRecommend recommend = new DiscoverRecommend();
                 try {
                     recommend.parseJSON(json);
-                    Log.d("recommend===",recommend.toString());
+//                    Log.d("recommend===",recommend.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
