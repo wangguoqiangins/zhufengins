@@ -24,6 +24,34 @@ public class DiscoverRecommend {
     public DiscoverRecommend() {
     }
 
+    public int getRet() {
+        return ret;
+    }
+
+    public DiscoverRecommendDiscoverycolumns getDiscoveryColumns() {
+        return discoveryColumns;
+    }
+
+    public DiscoverEditorRecommendAlbums getEditorRecommendAlbums() {
+        return editorRecommendAlbums;
+    }
+
+    public DiscoverHotRecommends getHotRecommends() {
+        return hotRecommends;
+    }
+
+    public DiscoverFocusima getFocusima() {
+        return focusima;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public DiscoverSpecial getSpecial() {
+        return special;
+    }
+
     public void parseJSON(JSONObject json) throws JSONException {
         if (json != null) {
             Log.d("json",json.toString());

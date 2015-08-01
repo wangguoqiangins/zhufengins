@@ -4,13 +4,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.qianfeng.zhufengfm.app.Constants;
 import com.qianfeng.zhufengfm.app.R;
 import com.qianfeng.zhufengfm.app.SettingsActivity;
 import com.qianfeng.zhufengfm.app.TestActivity;
+import com.qianfeng.zhufengfm.app.adapters.DiscoverRecommendAdapter;
+import com.qianfeng.zhufengfm.app.model.discoverRecommend.DiscoverRecommend;
+import com.qianfeng.zhufengfm.app.parsers.DataParser;
+import com.qianfeng.zhufengfm.app.tasks.TaskCallback;
+import com.qianfeng.zhufengfm.app.tasks.TaskResult;
+import com.qianfeng.zhufengfm.app.tasks.impl.DiscoverRecommendTask;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +31,9 @@ import java.util.List;
  * Date: 15/7/29
  * Email: vhly@163.com
  */
-public class DiscoverRecommendFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class DiscoverRecommendFragment extends Fragment implements AdapterView.OnItemClickListener, TaskCallback {
+
+    private DiscoverRecommendAdapter adapter;
 
     public DiscoverRecommendFragment() {
     }
@@ -33,35 +45,25 @@ public class DiscoverRecommendFragment extends Fragment implements AdapterView.O
         View ret = inflater.inflate(R.layout.fragment_discover_recommend, container, false);
         ListView listView = (ListView) ret.findViewById(R.id.discover_recommend_list);
 
+        if (listView != null) {
 
-        List<String> list = new LinkedList<String>();
-        for (int i = 0; i < 30; i++) {
-            list.add("java..."+i);
-        }
-        if(listView!=null){
-            //TODO 设置实际数据的adapter
-            ////////
-            //添加头部
-            ImageView imageView = new ImageView(getActivity());
-            imageView.setImageResource(R.mipmap.ic_launcher);
-            listView.addHeaderView(imageView);//在setAdapter之前添加跟随滚动的header
-            ImageView imageView1 = new ImageView(getActivity());
-            imageView1.setImageResource(R.mipmap.ic_action_search);
-            listView.addHeaderView(imageView1);
-            //添加底部视图
-            TextView btn = new TextView(getActivity());
-            btn.setText("点击加载更多");
-            listView.addFooterView(btn);
-            ArrayAdapter<String> adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1
-            ,list);
+            // TODO 设置实际数据的 Adapter
+            /////
+            adapter = new DiscoverRecommendAdapter(getActivity());
             listView.setAdapter(adapter);
-            listView.setOnItemClickListener(this);
-
-
         }
 
         return ret;
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        DiscoverRecommendTask task =
+                new DiscoverRecommendTask(this);
+        task.execute();
     }
 
     @Override
@@ -87,5 +89,36 @@ public class DiscoverRecommendFragment extends Fragment implements AdapterView.O
 //        }
         FragmentActivity activity = getActivity();
         Toast.makeText(activity,"点击"+position+"viewscount",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onTaskFinished(TaskResult result) {
+        if (result != null) {
+
+            int taskId = result.taskId;
+
+            Object data = result.data;
+
+            if(taskId == Constants.TASK_DISCOVER_RECOMMEND){
+
+                if (data != null) {
+                    if (data instanceof JSONObject){
+                        JSONObject json = (JSONObject) data;
+                        DiscoverRecommend recommend = new DiscoverRecommend();
+                        try {
+                            recommend.parseJSON(json);
+                            adapter.setRecommend(recommend);
+                            Log.d("====ins","000000");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }
+
+            }
+
+        }
     }
 }

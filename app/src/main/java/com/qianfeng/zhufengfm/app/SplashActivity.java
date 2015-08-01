@@ -33,8 +33,8 @@ public class SplashActivity extends FragmentActivity implements TaskCallback {
         setContentView(R.layout.activity_splash);
         //为当前线程，设置未捕获异常的处理器
         //这个处理器就是用来保存未捕获异常日志信息的
-        UncaughtExceptionHandlerImpl handler = new UncaughtExceptionHandlerImpl(getApplicationContext());
-        Thread.setDefaultUncaughtExceptionHandler(handler);
+//        UncaughtExceptionHandlerImpl handler = new UncaughtExceptionHandlerImpl(getApplicationContext());
+//        Thread.setDefaultUncaughtExceptionHandler(handler);
 
     }
 
